@@ -55,6 +55,11 @@ public class HomePage {
     public WebElement getLoginButton() {return driver.findElement(By.cssSelector("[data-qa='login-button']"));}
 
     public WebElement getLoggedInAs(String username) {
-        return driver.findElement(By.xpath("//a[.//b[text()='" + username + "']]"));}
+        return driver.findElement(By.xpath("//a[.//b[text()='" + username + "']]"));
+    }
+
+    public WebElement getIncorrectDetailsText() {
+        return driver.findElement(By.xpath("//p[text()='Your email or password is incorrect!']"));
+    }
 
 }

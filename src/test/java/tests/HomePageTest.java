@@ -1,5 +1,6 @@
 package tests;
 
+import dev.failsafe.internal.util.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.JavascriptExecutor;
@@ -118,5 +119,29 @@ public class HomePageTest extends BaseTest {
         Assertions.assertEquals("Logged in as " + username, actualText);
         homePage.getDeleteAccount().click(); // Step 9
         Assertions.assertTrue(homePage.getAccountDeletedText().isDisplayed()); // Step 10
+    }
+
+    /**
+     *
+     1. Launch browser
+     2. Navigate to url '<a href="http://automationexercise.com">...</a>'
+     3. Verify that home page is visible successfully
+     4. Click on 'Signup / Login' button
+     5. Verify 'Login to your account' is visible
+     6. Enter incorrect email address and password
+     7. Click 'login' button
+     8. Verify error 'Your email or password is incorrect!' is visible
+     */
+    @Test
+    public void loginWithIncorrectUsernameAndPassword() {
+        HomePage homePage = new HomePage(driver); // Step 1
+        WebElement signupLogin = homePage.getSignupLoginLink(); // Step 2
+        Assertions.assertTrue(homePage.getHomeIcon().isDisplayed()); // Step 3
+        signupLogin.click(); // Step 4
+        Assertions.assertTrue(homePage.getLoginToYourAccountText().isDisplayed()); // Step 5
+        homePage.getEmailLogin().sendKeys("a@a.com");
+        homePage.getPasswordLogin().sendKeys("a");
+        homePage.getLoginButton().click(); // Step 7
+        Assertions.assertTrue(homePage.getIncorrectDetailsText().isDisplayed());
     }
 }
