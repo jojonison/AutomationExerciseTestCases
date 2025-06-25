@@ -4,10 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class HomePage {
+public class LogInAndRegistrationPage {
     WebDriver driver;
 
-    public HomePage(WebDriver driver) {this.driver = driver;}
+    public LogInAndRegistrationPage(WebDriver driver) {this.driver = driver;}
     public WebElement getHomeIcon() {return driver.findElement(By.cssSelector(".fa.fa-home"));}
     public WebElement getSignupLoginLink() {return driver.findElement(By.linkText("Signup / Login"));}
     public WebElement getNewSignupText() {
@@ -60,6 +60,12 @@ public class HomePage {
 
     public WebElement getIncorrectDetailsText() {
         return driver.findElement(By.xpath("//p[text()='Your email or password is incorrect!']"));
+    }
+
+    public WebElement getLogout() {return driver.findElement(By.cssSelector("a[href='/logout']"));}
+
+    public WebElement getEmailAlreadyExistsTest() {
+        return driver.findElement(By.xpath("//p[text()='Email Address already exist!']"));
     }
 
 }

@@ -6,9 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.Select;
-import pages.HomePage;
+import pages.LogInAndRegistrationPage;
 
-import static tests.HomePageTest.removeAds;
+import static tests.LogInAndRegistrationPageTest.removeAds;
 
 public record Account(String username, String email, String password) {
 
@@ -18,48 +18,48 @@ public record Account(String username, String email, String password) {
         driver = new EdgeDriver();
         driver.manage().window().maximize(); // Step 1
         driver.get("https://automationexercise.com/"); // Step 2
-        HomePage homePage = new HomePage(driver);
-        WebElement signupLogin = homePage.getSignupLoginLink();
+        LogInAndRegistrationPage logInAndRegistrationPage = new LogInAndRegistrationPage(driver);
+        WebElement signupLogin = logInAndRegistrationPage.getSignupLoginLink();
 
-        Assertions.assertTrue(homePage.getHomeIcon().isDisplayed()); // Step 3
+        Assertions.assertTrue(logInAndRegistrationPage.getHomeIcon().isDisplayed()); // Step 3
         signupLogin.click(); // Step 4
-        Assertions.assertTrue(homePage.getNewSignupText().isDisplayed()); // Step 5
+        Assertions.assertTrue(logInAndRegistrationPage.getNewSignupText().isDisplayed()); // Step 5
         // Step 6
         String username = "asdfsadfsad" + System.currentTimeMillis(); // prevents duplicate email
         String email = username + "@example.com";
-        homePage.getNameInputField().sendKeys(username);
-        homePage.getSignUpEmailInputField().sendKeys(email);
-        homePage.getSignUpButton().click(); // Step 7
-        Assertions.assertTrue(homePage.getEnterAccountInformationText().isDisplayed()); // Step 8
+        logInAndRegistrationPage.getNameInputField().sendKeys(username);
+        logInAndRegistrationPage.getSignUpEmailInputField().sendKeys(email);
+        logInAndRegistrationPage.getSignUpButton().click(); // Step 7
+        Assertions.assertTrue(logInAndRegistrationPage.getEnterAccountInformationText().isDisplayed()); // Step 8
 
         // remove ad
         removeAds(driver);
 
         // Step 9
-        homePage.getMrRadio().click();
+        logInAndRegistrationPage.getMrRadio().click();
         String password = "password";
-        homePage.getPasswordSignUp().sendKeys(password);
-        new Select(homePage.getDateOfBirthDayDropDown()).selectByValue("25");
-        new Select(homePage.getDateOfBirthMonthDropDown()).selectByVisibleText("December");
-        new Select(homePage.getDateOfBirthYearDropDown()).selectByValue("2001");
-        homePage.getNewsLetterCheckbox().click(); // Step 10
-        homePage.getOffersCheckbox().click(); // Step 11
+        logInAndRegistrationPage.getPasswordSignUp().sendKeys(password);
+        new Select(logInAndRegistrationPage.getDateOfBirthDayDropDown()).selectByValue("25");
+        new Select(logInAndRegistrationPage.getDateOfBirthMonthDropDown()).selectByVisibleText("December");
+        new Select(logInAndRegistrationPage.getDateOfBirthYearDropDown()).selectByValue("2001");
+        logInAndRegistrationPage.getNewsLetterCheckbox().click(); // Step 10
+        logInAndRegistrationPage.getOffersCheckbox().click(); // Step 11
         // Step 12
-        homePage.getFirstName().sendKeys("Jotaro");
-        homePage.getLastName().sendKeys("Kujo");
-        homePage.getCompany().sendKeys("Star Platinum");
-        homePage.getAddress1().sendKeys("asdf");
-        homePage.getAddress2().sendKeys("asdfasf");
-        new Select(homePage.getCountry()).selectByValue("Australia");
-        homePage.getState().sendKeys("asdff");
-        homePage.getCity().sendKeys("city");
-        homePage.getZipcode().sendKeys("1234");
-        homePage.getMobileNumber().sendKeys("91238470");
-        homePage.getCreateAccountButton().click(); // Step 13
-        Assertions.assertTrue(homePage.getAccountCreatedText().isDisplayed()); // Step 14
-        homePage.getContinueButton().click(); // Step 15
+        logInAndRegistrationPage.getFirstName().sendKeys("Jotaro");
+        logInAndRegistrationPage.getLastName().sendKeys("Kujo");
+        logInAndRegistrationPage.getCompany().sendKeys("Star Platinum");
+        logInAndRegistrationPage.getAddress1().sendKeys("asdf");
+        logInAndRegistrationPage.getAddress2().sendKeys("asdfasf");
+        new Select(logInAndRegistrationPage.getCountry()).selectByValue("Australia");
+        logInAndRegistrationPage.getState().sendKeys("asdff");
+        logInAndRegistrationPage.getCity().sendKeys("city");
+        logInAndRegistrationPage.getZipcode().sendKeys("1234");
+        logInAndRegistrationPage.getMobileNumber().sendKeys("91238470");
+        logInAndRegistrationPage.getCreateAccountButton().click(); // Step 13
+        Assertions.assertTrue(logInAndRegistrationPage.getAccountCreatedText().isDisplayed()); // Step 14
+        logInAndRegistrationPage.getContinueButton().click(); // Step 15
         // Step 16
-        String actualText = homePage.getLoggedInAs(username).getText();
+        String actualText = logInAndRegistrationPage.getLoggedInAs(username).getText();
         Assertions.assertEquals("Logged in as " + username, actualText);
         System.out.println("Email: " + email);
         System.out.println("Username: " + username);
