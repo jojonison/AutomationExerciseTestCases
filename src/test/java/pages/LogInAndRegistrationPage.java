@@ -51,7 +51,7 @@ public class LogInAndRegistrationPage {
     public WebElement getDeleteAccount() {return driver.findElement(By.cssSelector("a[href='/delete_account']"));}
 
     public WebElement getEmailLogin() {return driver.findElement(By.cssSelector("[data-qa='login-email']"));}
-    public WebElement getPasswordLogin() {return driver.findElement(By.cssSelector("[data-qa='login-password'"));}
+    public WebElement getPasswordLogin() {return driver.findElement(By.cssSelector("[data-qa='login-password']"));}
     public WebElement getLoginButton() {return driver.findElement(By.cssSelector("[data-qa='login-button']"));}
 
     public WebElement getLoggedInAs(String username) {
