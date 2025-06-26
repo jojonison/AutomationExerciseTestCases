@@ -2,15 +2,20 @@ package utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.Select;
+import pages.HomePage;
 import pages.LogInAndRegistrationPage;
 
-import static tests.LogInAndRegistrationPageTest.removeAds;
-
 public record Account(String username, String email, String password) {
+
+    public static void removeAds(WebDriver driver) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.querySelectorAll('ins.adsbygoogle, iframe[id^=\"aswift\"], div[id$=\"_host\"]').forEach(el => el.remove());");
+    }
 
     public static Account registerWithoutDeleting() {
         WebDriver driver;
@@ -19,11 +24,8 @@ public record Account(String username, String email, String password) {
         driver.manage().window().maximize(); // Step 1
         driver.get("https://automationexercise.com/"); // Step 2
         LogInAndRegistrationPage logInAndRegistrationPage = new LogInAndRegistrationPage(driver);
-        WebElement signupLogin = logInAndRegistrationPage.getSignupLoginLink();
-
-        Assertions.assertTrue(logInAndRegistrationPage.getHomeIcon().isDisplayed()); // Step 3
-        signupLogin.click(); // Step 4
-        Assertions.assertTrue(logInAndRegistrationPage.getNewSignupText().isDisplayed()); // Step 5
+        HomePage homePage = new HomePage(driver);
+        homePage.getSignupLoginLink().click(); // Step 4
         // Step 6
         String username = "asdfsadfsad" + System.currentTimeMillis(); // prevents duplicate email
         String email = username + "@example.com";

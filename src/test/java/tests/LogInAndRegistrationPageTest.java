@@ -7,6 +7,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import pages.HomePage;
 import pages.LogInAndRegistrationPage;
 import utils.Account;
 import utils.BaseTest;
@@ -37,10 +38,9 @@ public class LogInAndRegistrationPageTest extends BaseTest {
     @Test
     public void registerUser() {
         LogInAndRegistrationPage logInAndRegistrationPage = new LogInAndRegistrationPage(driver);
-        WebElement signupLogin = logInAndRegistrationPage.getSignupLoginLink();
-
-        Assertions.assertTrue(logInAndRegistrationPage.getHomeIcon().isDisplayed()); // Step 3
-        signupLogin.click(); // Step 4
+        HomePage homePage = new HomePage(driver);
+        Assertions.assertEquals("Automation Exercise", homePage.getTitle()); // Step 3
+        homePage.getSignupLoginLink().click(); // Step 4
         Assertions.assertTrue(logInAndRegistrationPage.getNewSignupText().isDisplayed()); // Step 5
         // Step 6
         String username = "asdfsadfsad" + System.currentTimeMillis(); // prevents duplicate email
@@ -103,11 +103,11 @@ public class LogInAndRegistrationPageTest extends BaseTest {
      */
     @Test
     public void loginWithCorrectUsernameAndPassword() {
-        Account account = Account.registerWithoutDeleting();
-        LogInAndRegistrationPage logInAndRegistrationPage = new LogInAndRegistrationPage(driver); // Step 1
-        WebElement signupLogin = logInAndRegistrationPage.getSignupLoginLink(); // Step 2
-        Assertions.assertTrue(logInAndRegistrationPage.getHomeIcon().isDisplayed()); // Step 3
-        signupLogin.click(); // Step 4
+        Account account = Account.registerWithoutDeleting(); // Makes an account
+        LogInAndRegistrationPage logInAndRegistrationPage = new LogInAndRegistrationPage(driver); // Step 1 Step 2
+        HomePage homePage = new HomePage(driver);
+        Assertions.assertEquals("Automation Exercise", homePage.getTitle()); // Step 3
+        homePage.getSignupLoginLink().click(); // Step 4
         Assertions.assertTrue(logInAndRegistrationPage.getLoginToYourAccountText().isDisplayed()); // Step 5
         String email = account.email(); String password = account.password(); String username = account.username();
         // Step 6
@@ -119,6 +119,9 @@ public class LogInAndRegistrationPageTest extends BaseTest {
         Assertions.assertEquals("Logged in as " + username, actualText);
         logInAndRegistrationPage.getDeleteAccount().click(); // Step 9
         Assertions.assertTrue(logInAndRegistrationPage.getAccountDeletedText().isDisplayed()); // Step 10
+
+        // Delete
+        homePage.getDeleteAccount().click();
     }
 
     /**
@@ -134,10 +137,10 @@ public class LogInAndRegistrationPageTest extends BaseTest {
      */
     @Test
     public void loginWithIncorrectUsernameAndPassword() {
-        LogInAndRegistrationPage logInAndRegistrationPage = new LogInAndRegistrationPage(driver); // Step 1
-        WebElement signupLogin = logInAndRegistrationPage.getSignupLoginLink(); // Step 2
-        Assertions.assertTrue(logInAndRegistrationPage.getHomeIcon().isDisplayed()); // Step 3
-        signupLogin.click(); // Step 4
+        LogInAndRegistrationPage logInAndRegistrationPage = new LogInAndRegistrationPage(driver); // Step 1 Step 2
+        HomePage homePage = new HomePage(driver);
+        Assertions.assertEquals("Automation Exercise", homePage.getTitle()); // Step 3
+        homePage.getSignupLoginLink().click(); // Step 4
         Assertions.assertTrue(logInAndRegistrationPage.getLoginToYourAccountText().isDisplayed()); // Step 5
         logInAndRegistrationPage.getEmailLogin().sendKeys("a@a.com");
         logInAndRegistrationPage.getPasswordLogin().sendKeys("a");
@@ -162,9 +165,9 @@ public class LogInAndRegistrationPageTest extends BaseTest {
     public void logoutUser() {
         Account account = Account.registerWithoutDeleting();
         LogInAndRegistrationPage logInAndRegistrationPage = new LogInAndRegistrationPage(driver); // Step 1
-        WebElement signupLogin = logInAndRegistrationPage.getSignupLoginLink(); // Step 2
-        Assertions.assertTrue(logInAndRegistrationPage.getHomeIcon().isDisplayed()); // Step 3
-        signupLogin.click(); // Step 4
+        HomePage homePage = new HomePage(driver);
+        Assertions.assertEquals("Automation Exercise", homePage.getTitle()); // Step 3
+        homePage.getSignupLoginLink().click(); // Step 4
         Assertions.assertTrue(logInAndRegistrationPage.getLoginToYourAccountText().isDisplayed()); // Step 5
         String email = account.email(); String password = account.password(); String username = account.username();
         // Step 6
@@ -181,7 +184,7 @@ public class LogInAndRegistrationPageTest extends BaseTest {
         logInAndRegistrationPage.getEmailLogin().sendKeys(account.email());
         logInAndRegistrationPage.getPasswordLogin().sendKeys(account.password());
         logInAndRegistrationPage.getLoginButton().click();
-        logInAndRegistrationPage.getDeleteAccount().click();
+        homePage.getDeleteAccount().click();
     }
 
     /**
@@ -201,9 +204,9 @@ public class LogInAndRegistrationPageTest extends BaseTest {
     public void registerWithExistingEmail() {
         Account account = Account.registerWithoutDeleting();
         LogInAndRegistrationPage logInAndRegistrationPage = new LogInAndRegistrationPage(driver); // Step 1
-        WebElement signupLogin = logInAndRegistrationPage.getSignupLoginLink(); // Step 2
-        Assertions.assertTrue(logInAndRegistrationPage.getHomeIcon().isDisplayed()); // Step 3
-        signupLogin.click(); // Step 4
+        HomePage homePage = new HomePage(driver);
+        Assertions.assertEquals("Automation Exercise", homePage.getTitle()); // Step 3
+        homePage.getSignupLoginLink().click(); // Step 4
         // setting up an account
         String email = account.email(); String password = account.password(); String username = account.username();
         logInAndRegistrationPage.getEmailLogin().sendKeys(email);
@@ -211,7 +214,7 @@ public class LogInAndRegistrationPageTest extends BaseTest {
         logInAndRegistrationPage.getLoginButton().click();
         String actualText = logInAndRegistrationPage.getLoggedInAs(username).getText();
         Assertions.assertEquals("Logged in as " + username, actualText);
-        logInAndRegistrationPage.getLogout().click();
+        homePage.getLogout().click();
 
         Assertions.assertTrue(logInAndRegistrationPage.getNewSignupText().isDisplayed()); // Step 5
         // Step 6
@@ -224,7 +227,7 @@ public class LogInAndRegistrationPageTest extends BaseTest {
         logInAndRegistrationPage.getEmailLogin().sendKeys(account.email());
         logInAndRegistrationPage.getPasswordLogin().sendKeys(account.password());
         logInAndRegistrationPage.getLoginButton().click();
-        logInAndRegistrationPage.getDeleteAccount().click();
+        homePage.getDeleteAccount().click();
     }
 
 
