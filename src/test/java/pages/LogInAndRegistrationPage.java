@@ -8,8 +8,7 @@ public class LogInAndRegistrationPage {
     WebDriver driver;
 
     public LogInAndRegistrationPage(WebDriver driver) {this.driver = driver;}
-    public WebElement getHomeIcon() {return driver.findElement(By.cssSelector(".fa.fa-home"));}
-    public WebElement getSignupLoginLink() {return driver.findElement(By.linkText("Signup / Login"));}
+
     public WebElement getNewSignupText() {
         return driver.findElement(By.xpath("//h2[contains(text(), 'New User Signup!')]"));
     }
